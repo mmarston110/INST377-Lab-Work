@@ -20,13 +20,13 @@
   }
 
   .links {
-      border: 1px solid #fff;
-      display: flex;
-      justify-content: flex-end;
+    border: 1px solid #fff;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .main-page {
-      margin-left: 20px;
+    margin-left: 20px;
   }
 
   .header-container {
@@ -42,4 +42,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .photo-grid-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .photo-grid {
+    width: 900px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .photo-grid-item {
+    border: 1px solid #fff;
+    width: 300px;
+    height: 300px;
   }
