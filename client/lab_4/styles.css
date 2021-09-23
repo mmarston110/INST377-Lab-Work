@@ -25,12 +25,12 @@
     display: block;
 }
 
-.carousel_actions {
+.carousel_action {
     display: flex;
     justify-content: center;
 }
 
-.carousel_actions button {
+.carousel_action button {
     border-radius: 50px;
     border: 0;
     font-weight: bold;
@@ -39,10 +39,10 @@
     height: 40px;
 }
 
-.carousel_actions button#carousel_button--prev {
+.carousel_action button#carousel_button--prev {
     margin-right: 20px;
 }
 
-.carousel_actions button#carousel_button--next {
+.carousel_action button#carousel_button--next {
     margin-left: 20px;
 }
