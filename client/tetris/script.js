@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
   const grid = document.querySelector('.grid');
-  const squares = Array.from(document.querySelectorAll('.grid div'));
-  const ScoreDisplay = document.querySelector('#score');
-  const StartBtn = document.querySelector('#start-button');
+  let squares = Array.from(document.querySelectorAll('.grid div'));
+  const scoreDisplay = document.querySelector('#score');
+  const startBtn = document.querySelector('#start-button');
   const width = 10;
+  let nextRandom = 0;
+  let timerId;
 
   // The tetrominoes
   const lTetromino = [
@@ -64,18 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // freeze
-  function freeze() {
-    if (current.some((index) => squares[currentPosition + index + width].classList.contains('taken'))) {
-      current.forEach((index) => squares[currentPosition + index].classList.add('taken'));
-      // start a new tetromino falling
-      random = Math.floor(Math.random() * theTetrominoes.length);
-      current = theTetrominoes[random][currentRotation];
-      currentPosition = 4;
-      draw();
-    }
-  }
-
   // move down function
   function moveDown() {
     undraw();
@@ -85,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // make the tetromino move down every second
-  timerId = setInterval(moveDown, 500);
+  // timerId = setInterval(moveDown, 500);
 
   // move the tetromino left,  unless is at the edge or there is a blockage
   function moveLeft() {
@@ -124,6 +114,76 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     current = theTetrominoes[random][currentRotation];
     draw();
+  }
+
+  const displaySquares = document.querySelectorAll('.mini-grid div');
+  const displayWidth = 4;
+  const displayIndex = 0;
+  // let nextRandom = 0
+
+  // the tetrominos without rotations
+  const upNextTetrominoes = [
+    [1, displayWidth + 1, displayWidth * 2 + 1, 2], // lTetromino
+    [0, displayWidth, displayWidth + 1, displayWidth * 2 + 1], // zTetromino
+    [1, displayWidth, displayWidth + 1, displayWidth + 2], // tTetromino
+    [0, 1, displayWidth, displayWidth + 1], // oTetromino
+    [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1] // iTetromino
+  ];
+
+  // display the shape in mini-grid
+  function displayShape() {
+    displaySquares.forEach((square) => {
+      square.classList.remove('tetromino');
+    });
+    upNextTetrominoes[nextRandom].forEach((index) => {
+      displaySquares[displayIndex + index].classList.add('tetromino');
+    });
+  }
+
+  // add button function
+  startBtn.addEventListener('click', () => {
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
+    } else {
+      draw();
+      timerId = setInterval(moveDown, 500);
+      nextRandom = Math.floor(Math.random() * theTetrominoes.length);
+      displayShape();
+    }
+  });
+
+  // add score
+  function addScore() {
+    for (let i = 0; i < 199; i += width) {
+      const row = [i, i + 1, i + 2, i + 3, i + 4, i + 5, i + 6, i + 7, i + 8, i + 9];
+
+      if (row.every((index) => squares[index].classList.contains('taken'))) {
+        score += 10;
+        scoreDisplay.innerHTML = score;
+        row.forEach((index) => {
+          squares[index].classList.remove('taken');
+          squares[index].classList.remove('tetromino');
+        });
+        const squaresRemoved = squares.splice(i, width);
+        squares = squaresRemoved.concat(squares);
+        squares.forEach((cell) => grid.appendChild(cell));
+      }
+    }
+  }
+
+  // freeze
+  function freeze() {
+    if (current.some((index) => squares[currentPosition + index + width].classList.contains('taken'))) {
+      current.forEach((index) => squares[currentPosition + index].classList.add('taken'));
+      // start a new tetromino falling
+      random = nextRandom;
+      nextRandom = Math.floor(Math.random() * theTetrominoes.length);
+      current = theTetrominoes[random][currentRotation];
+      currentPosition = 4;
+      draw();
+      displayShape();
+    }
   }
 
   // assign functions to keycodes
