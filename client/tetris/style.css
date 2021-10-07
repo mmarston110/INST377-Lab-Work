@@ -14,3 +14,16 @@
 .tetromino {
     background-color: darkturquoise;
 }
+
+.mini-grid {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: coral;
+}
+
+.mini-grid div {
+    height: 20px;
+    width: 20px;
+}
