@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const width = 10;
   let nextRandom = 0;
   let timerId;
+  let score = 0;
 
   // The tetrominoes
   const lTetromino = [
@@ -64,14 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     current.forEach((index) => {
       squares[currentPosition + index].classList.remove('tetromino');
     });
-  }
-
-  // move down function
-  function moveDown() {
-    undraw();
-    currentPosition += width;
-    draw();
-    freeze();
   }
 
   // make the tetromino move down every second
@@ -140,19 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // add button function
-  startBtn.addEventListener('click', () => {
-    if (timerId) {
-      clearInterval(timerId);
-      timerId = null;
-    } else {
-      draw();
-      timerId = setInterval(moveDown, 500);
-      nextRandom = Math.floor(Math.random() * theTetrominoes.length);
-      displayShape();
-    }
-  });
-
   // add score
   function addScore() {
     for (let i = 0; i < 199; i += width) {
@@ -172,6 +152,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // game over
+  function gameOver() {
+    if (current.some((index) => squares[currentPosition + index].classList.contains('taken'))) {
+      scoreDisplay.innerHTML = 'end';
+      clearInterval(timerId);
+    }
+  }
+
   // freeze
   function freeze() {
     if (current.some((index) => squares[currentPosition + index + width].classList.contains('taken'))) {
@@ -183,8 +171,31 @@ document.addEventListener('DOMContentLoaded', () => {
       currentPosition = 4;
       draw();
       displayShape();
+      addScore();
+      gameOver();
     }
   }
+
+  // move down function
+  function moveDown() {
+    undraw();
+    currentPosition += width;
+    draw();
+    freeze();
+  }
+
+  // add button function
+  startBtn.addEventListener('click', () => {
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
+    } else {
+      draw();
+      timerId = setInterval(moveDown, 500);
+      nextRandom = Math.floor(Math.random() * theTetrominoes.length);
+      displayShape();
+    }
+  });
 
   // assign functions to keycodes
   function control(e) {
