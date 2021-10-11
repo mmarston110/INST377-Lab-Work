@@ -6,9 +6,15 @@
         <script src="script.js" charset="utf-8"></script>
     </head>
     <body>
-       <form action="", method="get", class="search">
-
-       </form>
+        <div class="container">
+            <form class="search-bar">
+                <input type="text" class="input" placeholder="City or State">
+                <ul class="suggestions">
+                    <li>Filter for a city</li>
+                    <li>Filter for a state</li>
+                </ul>
+            </form>
+        </div>
 
 <script>
     const endpoint = 'https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json';
@@ -26,7 +32,14 @@
     }
 
     function displayMatches() {
-        console.log(this.value)
+        console.log(this.value);
+
+    const searchInput = document.querySelector('.input');
+    const suggestions = document.querySelector('.suggestions');
+
+    searchInput.addEventListener('change', displayMatches);
+    
+    console.log(searchInput)
     }
 
 
