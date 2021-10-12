@@ -3,6 +3,10 @@
     background-color: cornsilk;
 }
 
+.title {
+    text-align: center;
+}
+
 .container {
     width: auto;
     display: flex;
