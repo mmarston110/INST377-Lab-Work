@@ -18,6 +18,52 @@ router.get('/demo', (req, res) => {
 });
 
 // /////////////////////////////////
+// // driverDemogrpahics ////////
+// /////////////////////////////////
+router.route('/driverDemographics')
+  .get((req, res) => {
+    try {
+      console.log('You touched the destination route!');
+      res.json({data: data});
+    } catch (err) {
+      console.log(error);
+      res.json({error: 'Something went wrong'});
+    }
+  })
+  .put({req, res}) => {
+    try {
+      res.json({message: 'put something endpoint'})
+    } catch(error) {
+      console.log(error);
+      res.json({error: 'Something went wrong'});
+    }
+  })
+  .post({req, res}) => {
+    try {
+      res.json({message: 'post something endpoint'})
+    } catch(error) {
+      console.log(error);
+      res.json({error: 'Something went wrong'});
+    }
+  })
+  .delete({req, res}) => {
+    try {
+      res.json({message: 'delete something endpoint'})
+    } catch(error) {
+      console.log(error);
+      res.json({error: 'Something went wrong'});
+    }
+  });
+
+
+
+
+
+
+
+
+  
+// /////////////////////////////////
 // ////WholeMeal demos////////
 // /////////////////////////////////
 router.route('/wholeMeal')
