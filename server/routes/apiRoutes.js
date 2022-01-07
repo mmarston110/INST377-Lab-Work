@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+/*
 import express from 'express';
 import sequelize from 'sequelize';
 import chalk from 'chalk';
@@ -394,3 +395,4 @@ router.get('/custom', async (req, res) => {
 });
 
 export default router;
+*/
